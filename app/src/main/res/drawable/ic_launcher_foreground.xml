@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer scanning guide bracket frame in high-contrast glowing Electric Green -->
+    <!-- Top-Left corner guide -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 32 32 h 12 v 3 h -9 v 9 h -3 z" />
+    <!-- Top-Right corner guide -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 76 32 h -12 v 3 h 9 v 9 h 3 z" />
+    <!-- Bottom-Left corner guide -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 32 76 h 12 v -3 h -9 v -9 h -3 z" />
+    <!-- Bottom-Right corner guide -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 76 76 h -12 v -3 h 9 v -9 h 3 z" />
+        
+    <!-- Center elegant rounded emerald node hub -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M 54 46 A 8 8 0 1 0 54 62 A 8 8 0 1 0 54 46 Z" />
+        
+    <!-- Vertical sleek target hair line -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 53.5 38 h 1 v 32 h -1 z" />
+    <!-- Horizontal sleek target hair line -->
+    <path
+        android:fillColor="#00FF9C"
+        android:pathData="M 38 53.5 h 32 v 1 h -32 z" />
+</vector>

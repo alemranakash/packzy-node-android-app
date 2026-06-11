@@ -1,0 +1,6 @@
+{
+  "name": "Packzy Node",
+  "description": "Premium cyberpunk-themed utility tracking the Packzy Node with real-time barcode scanning",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
