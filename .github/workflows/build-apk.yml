@@ -7,6 +7,9 @@ on:
     branches: [ "main", "master", "develop" ]
   workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   build:
     name: Build Debug APK
@@ -17,12 +20,20 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # 2. Set up the Java Development Kit (JDK 17)
-    - name: Set up JDK 17
+    # 2. Set up the Java Development Kit (JDK 21)
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: '21'
+
+    # 2.5. Create .env file for Secrets Gradle Plugin
+    - name: Configure Environment File
+      run: |
+        if [ ! -f .env ]; then
+          echo "Configuring default .env from template..."
+          cp .env.example .env
+        fi
 
     # 3. Setup Gradle (and configure automatic caching of dependencies and cache files)
     - name: Setup Gradle
