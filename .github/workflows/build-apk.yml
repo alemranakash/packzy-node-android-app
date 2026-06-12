@@ -57,7 +57,7 @@ jobs:
 
     # 6. Run Local JVM Unit Tests (Robolectric etc.)
     - name: Run Unit Tests
-      run: ./gradlew testDebugUnitTest -Proborazzi.test.verify=false --no-daemon
+      run: ./gradlew testDebugUnitTest --no-daemon
 
     # 7. Build Debug APK
     - name: Build Debug APK

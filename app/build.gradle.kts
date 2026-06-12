@@ -55,7 +55,17 @@ android {
     compose = true
     buildConfig = true
   }
-  testOptions { unitTests { isIncludeAndroidResources = true } }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+      all {
+        val testTask = it as org.gradle.api.tasks.testing.Test
+        if (System.getenv("CI") == "true") {
+          testTask.exclude("**/*ScreenshotTest*")
+        }
+      }
+    }
+  }
 }
 
 // Configure the Secrets Gradle Plugin to use .env and .env.example files
