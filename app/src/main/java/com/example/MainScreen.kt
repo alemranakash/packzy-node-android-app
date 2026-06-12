@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -85,6 +86,8 @@ fun MainScreen(
 
     val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
 
+    var showDevDialog by remember { mutableStateOf(false) }
+
     // Pulsing glowing animation for interactive components
     val transition = rememberInfiniteTransition(label = "glow")
     val pulseAlpha by transition.animateFloat(
@@ -111,6 +114,14 @@ fun MainScreen(
                 .padding(horizontal = if (isTablet) 32.dp else 20.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
+            // Dynamic Interactive Developer Branding Core Section
+            DeveloperBrandingSection(
+                pulseAlpha = pulseAlpha,
+                onTap = {
+                    showDevDialog = true
+                }
+            )
+
             // 1. HEADER BAR
             HeaderBar(
                 isTablet = isTablet,
@@ -265,6 +276,12 @@ fun MainScreen(
                 onTestCompile = { id -> viewModel.compileTargetUrl(id) }
             )
             
+            if (showDevDialog) {
+                DeveloperCredentialsDialog(
+                    onDismiss = { showDevDialog = false }
+                )
+            }
+
             // System Terminal Telemetry Status Footer
             Column(
                 modifier = Modifier
@@ -1281,4 +1298,249 @@ fun DynamicTargetPortalPanel(
             }
         }
     }
+}
+
+@Composable
+fun DeveloperBrandingSection(
+    pulseAlpha: Float,
+    onTap: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        Slate900,
+                        Color(0xFF031510) // ultra-deep emerald terminal background hue
+                    )
+                )
+            )
+            .border(
+                width = 1.dp,
+                color = ElectricGreen.copy(alpha = 0.12f + (0.08f * pulseAlpha)),
+                shape = RoundedCornerShape(16.dp)
+            )
+            .clickable { onTap() }
+            .padding(16.dp)
+            .testTag("developer_branding_container")
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Developer modern holographic emblem
+                Box(
+                    modifier = Modifier
+                        .size(38.dp)
+                        .clip(CircleShape)
+                        .background(ElectricGreen.copy(alpha = 0.08f))
+                        .border(1.dp, ElectricGreen.copy(alpha = 0.25f), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Code,
+                        contentDescription = null,
+                        tint = ElectricGreen,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+
+                Column {
+                    Text(
+                        text = "DEVELOPED BY AL EMRAN",
+                        color = Color.White,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 11.sp,
+                        letterSpacing = 1.5.sp
+                    )
+                    Text(
+                        text = "Lead Systems & Engine Architect",
+                        color = SoftSlateGray,
+                        fontSize = 9.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Medium,
+                        letterSpacing = 0.5.sp,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+            }
+
+            // Sleek holographic badge
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier
+                    .background(ElectricGreen.copy(alpha = 0.1f), RoundedCornerShape(20.dp))
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "INFO_LOG",
+                    color = ElectricGreen,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 8.sp,
+                    letterSpacing = 0.5.sp
+                )
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = null,
+                    tint = ElectricGreen,
+                    modifier = Modifier.size(10.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DeveloperCredentialsDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(contentColor = ElectricGreen)
+            ) {
+                Text(
+                    text = "TERMINAL_CLOSE",
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Code,
+                    contentDescription = null,
+                    tint = ElectricGreen,
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = "ENGINEER METADATA",
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+            }
+        },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "COGNITIVE ARCHITECT SIGN-OFF:",
+                    color = SoftSlateGray,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Slate900),
+                    border = BorderStroke(1.dp, Slate800),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "LEAD:",
+                                color = SoftSlateGray,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 10.sp
+                            )
+                            Text(
+                                text = "Al Emran",
+                                color = ElectricGreen,
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 11.sp
+                            )
+                        }
+                        
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "ROLE:",
+                                color = SoftSlateGray,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 10.sp
+                            )
+                            Text(
+                                text = "Senior Systems Engineer",
+                                color = Color.White,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 11.sp
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "ARCH:",
+                                color = SoftSlateGray,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 10.sp
+                            )
+                            Text(
+                                text = "Kotlin Multiplatform / Comp M3",
+                                color = Color.White,
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 11.sp
+                            )
+                        }
+                        
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            color = Slate800
+                        )
+
+                        Text(
+                            text = "A dedicated masterwork engineered for the Packzy logistics network. Custom-crafted to provide instant redirection routing, advanced diagnostic portal mapping, and responsive haptic telemetry feedback.",
+                            color = SoftSlateGray,
+                            fontSize = 10.sp,
+                            lineHeight = 14.sp
+                        )
+                    }
+                }
+                
+                Text(
+                    text = "STATUS: ACTIVE // SHA-256 DIGITAL_STAMP",
+                    color = ElectricGreen.copy(alpha = 0.6f),
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 9.sp,
+                    letterSpacing = 1.sp
+                )
+            }
+        },
+        containerColor = Color(0xFF0B1220), // super deep Slate950 background
+        shape = RoundedCornerShape(20.dp),
+        tonalElevation = 6.dp
+    )
 }

@@ -148,6 +148,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             return id
         }
         val base = _baseUrl.value
+        // If base is default Packzy login URL, replace with direct single consignment detail URL
+        if (base == "https://admin.packzy.com/admin/login") {
+            return "https://admin.packzy.com/admin/consignment/single/$id"
+        }
         return when {
             base.contains("{id}") -> {
                 base.replace("{id}", id)

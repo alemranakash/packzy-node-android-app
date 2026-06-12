@@ -27,6 +27,8 @@ jobs:
     # 3. Setup Gradle (and configure automatic caching of dependencies and cache files)
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
+      with:
+        cache-disabled: true
 
     # 4. Grant execute permission for the gradlew wrapper
     - name: Grant Execute Permission for Gradlew
